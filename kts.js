@@ -1,6 +1,6 @@
 function kts(){
-kts_version="Beta 1.0";
-var d=window.document;d.write(". ");var e=d.head.appendChild(d.createElement("title"));e.innerHTML="Keep Them Small &ndash; "+kts_version;b=d.body;b.innerHTML="";var a=b.appendChild(d.createElement("canvas"));a.style.position="fixed";a.style.left="0";a.style.top="0";d.addEventListener("resize",resize);
+kts.version="Beta 1.0";
+var d=window.document;d.write(". ");var e=d.head.appendChild(d.createElement("title"));e.innerHTML="Keep Them Small &ndash; "+kts.version;var b=d.body;b.innerHTML="";var a=b.appendChild(d.createElement("canvas"));a.style.position="fixed";a.style.left="0";a.style.top="0";d.addEventListener("resize",resize);
 var o=a.getContext("2d");
 var data={sm:0,x:3,y:4,s:0,ms:0,rs:0,c:[],init:function(){for(i=0;i<data.x*data.y;i++){data.c[i]={s:0,p:0,iid:-1};}data.q=15;data.su=0;data.v=1;data.sc=0;}};
 var rb=Item.apply({c:0.0333,color:"#0b0",onreachmax:function(i){data.c[i].s=2;return false;},onreachmin:function(i){data.c[i].iid=-1;},ontapclose:function(i){data.s=2},ontapreopen:function(i){data.s=2},render:function(c){
@@ -47,7 +47,7 @@ switch(data.ms){
 case 1:
 o.fillStyle="black";o.fillRect(0,0,w,h);
 o.fillStyle="white";o.font="bold "+h*0.1+"px Arial";o.textAlign="center";o.textBaseline="middle";
-o.fillText("KTS "+kts_version,w/2,h*0.12);
+o.fillText("KTS "+kts.version,w/2,h*0.12);
 o.font="bold "+h*0.06+"px Arial";
 o.fillText("Siphalor",w/2,h*0.29);
 o.fillText("iPhone 5C",w/2,h*0.43);
