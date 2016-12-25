@@ -271,7 +271,6 @@ Mode.prototype.additem=function(item){
 this.items[this.items.length]=item;
 };
 Mode.prototype.setmaxp=function(v){this.maxp=v;};
-
 Mode.prototype.onreachmax=function(i){
 if(data.c[i].iid!=-1){if(!this.items[data.c[i].iid].onreachmax(i)){
 return false;
