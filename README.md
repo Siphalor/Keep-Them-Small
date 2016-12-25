@@ -1,7 +1,7 @@
 # Keep Them Small
 **Keep Them Small** is a HTML5 game about preventing growing circles from getting to big. 
 
-*Currently it only works on mobile devices.*
+*Currently it only works on mobile devices and there's a problem with the Android browsers.*
 
 For more information about the game you can take a look at the [wiki](https://github.com/Siphalor/Keep-Them-Small/wiki). 
 
