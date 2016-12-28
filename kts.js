@@ -1,15 +1,15 @@
 function kts(){
-kts.version="Beta 1.0";
+kts.version="Beta 1.1";
 var d=window.document;d.write(". ");d.title="Keep Them Small – "+kts.version;var b=d.body;b.innerHTML="";var a=b.appendChild(d.createElement("canvas"));a.style.position="fixed";a.style.left="0";a.style.top="0";d.addEventListener("resize",resize);
 var o=a.getContext("2d");
-var data={sm:0,x:3,y:4,s:0,ms:0,rs:0,c:[],init:function(){for(i=0;i<data.x*data.y;i++){data.c[i]={s:0,p:0,iid:-1};}data.q=15;data.su=0;data.v=1;data.sc=0;}};
+var data={sm:0,x:3,y:4,s:0,ms:0,rs:-1,c:[],init:function(){for(i=0;i<data.x*data.y;i++){data.c[i]={s:0,p:0,iid:-1};}data.q=15;data.su=0;data.v=1;data.sc=0;data.f=0}};
 var rb=Item.apply({c:0.0333,color:"#0b0",onreachmax:function(i){data.c[i].s=2;return false;},onreachmin:function(i){data.c[i].iid=-1;},ontapclose:function(i){data.s=2},ontapreopen:function(i){data.s=2},render:function(c){
 o.fillStyle=this.color;
 o.beginPath();
 o.arc(c.x,c.y,p2r(c.p),0,Math.PI*2,true);
 o.closePath();o.fill();
 }});
-var ci=Item.apply({color:"ff0",c:0.0075,ontapclose:function(i){var id=data.c[i].iid;data.c[i].iid=-1;for(j=0;j<data.x*data.y;j++){data.c[j].s=0;data.c[j].p=0;}},ontapopen:function(i){data.c[i].s=0},
+var ci=Item.apply({color:"ff0",c:0.0075,ontapclose:function(i){var id=data.c[i].iid;data.c[i].iid=-1;for(j=0;j<data.x*data.y;j++){data.c[j].s=2;if(data.c[j].iid!=id)data.c[j].iid=-1;}},ontapopen:function(i){data.c[i].s=0},
 onreachmax:function(i){data.c[i].s=2;data.c[i].iid=-1;return false;}});
 var fi=Item.apply({color:"#0ee",c:0.0025,ontapclose:function(i){var id=data.c[i].iid;data.c[i].iid=-1;for(j in data.c){data.c[j].s=0;if((data.c[j].iid==-1||data.c[j].iid==id)&&data.c[j].p!=0)data.c[j].iid=id;}},ontapreopen:function(i){data.c[i].iid=-1;},ontapopen:function(i){if(data.c[i].p!=0){data.c[i].iid=-1;}else{data.c[i].s=0;}},onopen:function(i){if(data.c[i].p!=0){if(rand(0,data.q*4)==0){data.c[i].s=2;}else{data.c[i].s=0;}};},onchoose:function(i){if(data.c[i].s==0&&data.c[i].p==0){return true}return false},onreachmin:function(i){data.c[i].iid=-1;},
 render:function(c){
@@ -30,6 +30,7 @@ resize();
 a.addEventListener("touchstart",touch);
 setInterval(tick,100);
 setInterval(chooseTick,200);
+setInterval(resize,2000);
 
 function tick(){
 if(data.s==1){
@@ -39,9 +40,11 @@ modes[data.sm].oncircletick(i);
 render();
 }
 function render(){
-if(data.rs!=data.s){resize();data.rs=data.s}
-var w=a.width;
-var h=a.height;
+if(data.rs!=data.s){console.log("stateChange");
+if(data.s==2&&data.f==0){data.s=1.5;data.f=0.05;}
+resize();data.rs=data.s;}
+var w=innerWidth;
+var h=innerHeight;
 if(data.s==0){
 switch(data.ms){
 case 1:
@@ -119,6 +122,14 @@ o.fillStyle="white";
 o.font="bold "+innerHeight*0.07+"px Arial";
 o.fillText("→",w/2,innerHeight*0.84);
 o.fillText("WhatsApp",w/2,innerHeight*0.95);
+}
+o.fillStyle="rgba(255,51,51,"+(data.f).toString()+")";
+o.fillRect(0,0,innerWidth,innerHeight);
+if(data.f!=0){
+data.f+=(data.s==1.5?0.05:-0.05);
+if(data.f>1){
+data.s=2;data.f=1;
+}
 }
 }
 }
