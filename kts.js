@@ -30,7 +30,7 @@ resize();
 a.addEventListener("touchstart",touch);
 setInterval(tick,100);
 setInterval(chooseTick,200);
-setInterval(resize,2000);
+setInterval(function(){if(a.width!=innerWidth||a.height!=innerHeight)resize();},2000);
 
 function tick(){
 if(data.s==1){
@@ -42,7 +42,8 @@ render();
 function render(){
 if(data.rs!=data.s){console.log("stateChange");
 if(data.s==2&&data.f==0){data.s=1.5;data.f=0.05;}
-resize();data.rs=data.s;}
+resize();
+data.rs=data.s;}
 var w=innerWidth;
 var h=innerHeight;
 if(data.s==0){
@@ -92,6 +93,11 @@ break;
 }else{
 if(data.s==2){h-=h*0.2}o.fillStyle="rgb("+(data.su*28).toString()+",0,0)";
 o.fillRect(0,0,w,innerHeight);
+if(data.s!=2){
+o.textAlign="center";o.textBaseline="middle";o.font="bold "+h*0.27+"px Arial";
+o.fillStyle="#444";
+o.fillText(data.sc.toString(),w/2,h/2);
+}
 for(x=0;x<data.x;x++){
 for(y=0;y<data.y;y++){
 o.fillStyle="white";
@@ -130,6 +136,7 @@ data.f+=(data.s==1.5?0.05:-0.05);
 if(data.f>1){
 data.s=2;data.f=1;
 }
+if(data.f<0)data.f=0;
 }
 }
 }
@@ -180,7 +187,7 @@ case 1:
 var t=evt.changedTouches;
 for(i in t){
 if(Math.sqrt(Math.pow(t[i].pageX-window.innerWidth/2,2)+Math.pow(t[i].pageY-window.innerHeight*0.80,2))<=window.innerHeight*0.12){
-data.ms=0;resize();
+data.ms=0;
 }
 if(t[i].pageY>=window.innerHeight*0.53&&t[i].pageY<=window.innerHeight*0.61){
 window.location.href="http://www.github.com/Siphalor/Keep-Them-Small";
@@ -199,7 +206,7 @@ if(y>=0.3&&y<=0.5){
 data.sm=(data.sm==modes.length-1?0:data.sm+1);
 }
 if(Math.sqrt(Math.pow(t[i].pageX-window.innerWidth/2,2)+Math.pow(t[i].pageY-window.innerHeight*0.75,2))<=window.innerHeight*0.15){
-data.s=1;data.init();resize();
+data.s=1;data.init();
 }
 if(t[i].pageX>=window.innerWidth*0.82&&t[i].pageY>=window.innerHeight*0.84){
 data.ms=1;
@@ -221,7 +228,7 @@ data.c[x+y*data.x]=modes[data.sm].ontouchcircle(x,y);
 if(data.s==2){
 if(t[i].pageY>=window.innerHeight*0.9){window.location.href="whatsapp://send?text=" +encodeURIComponent(modes[data.sm].share.replace("\%n","Keep Them Small").replace("\%p",data.sc.toString()));b=false;
 }else if(t[i].pageY>=window.innerHeight*0.8){
-data.s=0;resize();
+data.s=0;
 }
 }
 }
