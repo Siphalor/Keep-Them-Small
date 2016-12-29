@@ -1,5 +1,5 @@
 function kts(){
-kts.version="Beta 1.1";
+kts.version="Beta 1.1.2";
 var d=window.document;d.write(". ");d.title="Keep Them Small – "+kts.version;var b=d.body;b.innerHTML="";var a=b.appendChild(d.createElement("canvas"));a.style.position="fixed";a.style.left="0";a.style.top="0";d.addEventListener("resize",resize);
 var o=a.getContext("2d");
 var data={sm:0,x:3,y:4,s:0,ms:0,rs:-1,c:[],init:function(){for(i=0;i<data.x*data.y;i++){data.c[i]={s:0,p:0,iid:-1};}data.q=15;data.su=0;data.v=1;data.sc=0;data.f=0}};
@@ -247,7 +247,7 @@ r+="%"+a.toString()+(s.charCodeAt(k)-16*a).toString();
 return r;
 }
 function rand(min,max){
-return Math.floor(Math.random()*(max-min))+min;
+return Math.floor(Math.random()*(max-min+1))+min;
 }
 function p2r(p){
 return data.r*0.2+data.r*0.8*p/30;
