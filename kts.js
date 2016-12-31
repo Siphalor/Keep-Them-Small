@@ -1,6 +1,6 @@
 function kts(){
 kts.version="Beta 1.1.2";
-var d=window.document;d.write(". ");d.title="Keep Them Small – "+kts.version;var b=d.body;b.innerHTML="";var a=b.appendChild(d.createElement("canvas"));a.style.position="fixed";a.style.left="0";a.style.top="0";d.addEventListener("resize",resize);
+var d=window.document;d.write(". ");d.title="Keep Them Small "+String.fromCharCode(8211)+" "+kts.version;var b=d.body;b.innerHTML="";var a=b.appendChild(d.createElement("canvas"));a.style.position="fixed";a.style.left="0";a.style.top="0";d.addEventListener("resize",resize);
 var o=a.getContext("2d");
 var data={sm:0,x:3,y:4,s:0,ms:0,rs:-1,c:[],init:function(){for(i=0;i<data.x*data.y;i++){data.c[i]={s:0,p:0,iid:-1};}data.q=15;data.su=0;data.v=1;data.sc=0;data.f=0}};
 var rb=Item.apply({c:0.0333,color:"#0b0",onreachmax:function(i){data.c[i].s=2;return false;},onreachmin:function(i){data.c[i].iid=-1;},ontapclose:function(i){data.s=2},ontapreopen:function(i){data.s=2}});
@@ -72,8 +72,8 @@ default:
 o.fillStyle="black";o.fillRect(0,0,w,h);
 o.fillStyle="white";o.font="bold "+h*0.1+"px Arial";o.textAlign="center";o.textBaseline="middle";
 o.fillText(modes[data.sm].name,w/2,h*0.3);
-o.fillText("⬆️",w/2,h*0.15);
-o.fillText("⬇️",w/2,h*0.45);
+o.fillText(String.fromCharCode(11014),w/2,h*0.15);
+o.fillText(String.fromCharCode(11015),w/2,h*0.45);
 o.beginPath();o.arc(w/2,h*0.75,h*0.15,0,2*Math.PI,true);o.closePath();o.fill();
 o.fillStyle="black";
 o.fillText("Play",w/2,h*0.75);
@@ -121,7 +121,7 @@ o.lineWidth=h*0.0021;
 o.beginPath();o.moveTo(0,innerHeight*0.8);o.lineTo(w,innerHeight*0.8);o.moveTo(0,innerHeight*0.9);o.lineTo(w,innerHeight*0.9);o.stroke();
 o.fillStyle="white";
 o.font="bold "+innerHeight*0.07+"px Arial";
-o.fillText("→",w/2,innerHeight*0.84);
+o.fillText(String.fromCharCode(8594),w/2,innerHeight*0.84);
 o.fillText("WhatsApp",w/2,innerHeight*0.95);
 }
 o.fillStyle="rgba(255,51,51,"+(data.f).toString()+")";
