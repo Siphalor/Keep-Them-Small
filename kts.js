@@ -1,19 +1,18 @@
 function kts(){
-kts.version="Beta 1.1.2";
+kts.version="B 1.2 P 1";
 var d=window.document;d.write(". ");d.title="Keep Them Small "+String.fromCharCode(8211)+" "+kts.version;var b=d.body;b.innerHTML="";var a=b.appendChild(d.createElement("canvas"));a.style.position="fixed";a.style.left="0";a.style.top="0";d.addEventListener("resize",resize);
 var o=a.getContext("2d");
 var data={sm:0,x:3,y:4,s:0,ms:0,rs:-1,c:[],init:function(){for(i=0;i<data.x*data.y;i++){data.c[i]={s:0,p:0,iid:-1};}data.q=15;data.su=0;data.v=1;data.sc=0;data.f=0}};
-var rb=Item.apply({c:0.0333,color:"#0b0",onreachmax:function(i){data.c[i].s=2;return false;},onreachmin:function(i){data.c[i].iid=-1;},ontapclose:function(i){data.s=2},ontapreopen:function(i){data.s=2}});
-var ci=Item.apply({color:"ff0",c:0.0075,ontapclose:function(i){for(j=0;j<data.x*data.y;j++){if(data.c[j].p!=0){data.c[j].s=2;data.c[j].iid=-1;}}},ontapopen:function(i){data.c[i].s=0},
-onreachmax:function(i){data.c[i].s=2;data.c[i].iid=-1;return false;}});
-var fi=Item.apply({color:"#0ee",c:0.0025,ontapclose:function(i){var id=data.c[i].iid;data.c[i].iid=-1;for(j in data.c){data.c[j].s=0;if((data.c[j].iid==-1||data.c[j].iid==id)&&data.c[j].p!=0)data.c[j].iid=id;}},ontapreopen:function(i){data.c[i].iid=-1;},ontapopen:function(i){if(data.c[i].p!=0){data.c[i].iid=-1;}else{data.c[i].s=0;}},onopen:function(i){if(data.c[i].p!=0){if(rand(0,data.q*4)==0){data.c[i].s=2;}else{data.c[i].s=0;}};},onchoose:function(i){if(data.c[i].s==0&&data.c[i].p==0){return true}return false},onreachmin:function(i){data.c[i].iid=-1;},
+var rb=Item.apply({c:333,color:"#8f3",onreachmax:function(i){data.c[i].s=2;return false;},onreachmin:function(i){data.c[i].iid=-1;},ontapclose:function(i){data.s=2},ontapreopen:function(i){data.s=2}});
+var ci=Item.apply({color:"ff3",c:75,ontapclose:function(i){for(j=0;j<data.x*data.y;j++){if(data.c[j].p!=0){data.c[j].s=2;data.c[j].iid=-1;}}},ontapopen:function(i){data.c[i].s=0}});
+var fi=Item.apply({color:"#5ff",c:35,ontapclose:function(i){var id=data.c[i].iid;data.c[i].iid=-1;for(j in data.c){data.c[j].s=0;if((data.c[j].iid==-1||data.c[j].iid==id)&&data.c[j].p!=0)data.c[j].iid=id;}},ontapreopen:function(i){data.c[i].iid=-1;},ontapopen:function(i){if(data.c[i].p!=0){data.c[i].iid=-1;}else{data.c[i].s=0;}},onopen:function(i){if(data.c[i].p!=0){if(rand(0,data.q*8)==0){data.c[i].s=2;}else{data.c[i].s=0;}};},onchoose:function(i){if(data.c[i].s==0&&data.c[i].p==0){return true}return false},onreachmin:function(i){data.c[i].iid=-1;},
 render:function(c){
-o.fillStyle=(c.s==1||(c.s==0&&c.p==0)?this.color:"#9ee");
+o.fillStyle=(c.s==1||(c.s==0&&c.p==0)?this.color:"#9ff");
 o.beginPath();
 o.arc(c.x,c.y,p2r(c.p),0,Math.PI*2,true);
 o.closePath();o.fill();
 }});
-var me=new Mode("Experimental");me.setmaxp(35);me.additem(rb);me.additem(ci);me.additem(fi);me.ci=0.5;
+var me=new Mode("Experimental");me.setmaxp(35);me.additem(rb);me.additem(ci);me.additem(fi);me.ci=0.95;
 me.su=75;
 me.share="I experimented a little bit with '\%n' and got a score of \%p.";
 var mati=new Mode("All The Items");mati.additem(rb);mati.ci=0.5;mati.additem(ci);mati.additem(fi);
@@ -97,7 +96,7 @@ for(x=0;x<data.x;x++){
 for(y=0;y<data.y;y++){
 o.fillStyle="white";
 var c=data.c[x+y*data.x];
-if(c.s==3)o.fillStyle="#f11";
+if(c.s==3)o.fillStyle="#f61";
 o.beginPath();
 o.arc(c.x,c.y,p2r(c.p),0,Math.PI*2,true);
 o.closePath();o.fill();
@@ -124,7 +123,7 @@ o.font="bold "+innerHeight*0.07+"px Arial";
 o.fillText(String.fromCharCode(8594),w/2,innerHeight*0.84);
 o.fillText("WhatsApp",w/2,innerHeight*0.95);
 }
-o.fillStyle="rgba(255,51,51,"+(data.f).toString()+")";
+o.fillStyle="rgba(255,90,90,"+(data.f).toString()+")";
 o.fillRect(0,0,innerWidth,innerHeight);
 if(data.f!=0){
 data.f+=(data.s==1.5?0.05:-0.05);
@@ -164,12 +163,16 @@ if(data.s==1){
 var r=rand(0,data.x*data.y-1);
 if(data.c[r].s==0&&rand(0,data.q)==0){data.c[r].s=1;
 if(data.c[r].iid!=-1)modes[data.sm].items[data.c[r].iid].onopen(r);}
-if(Math.random()<modes[data.sm].ci+0.1*(15-data.q)){
-r=rand(0,data.x*data.y-1);
-for(i in modes[data.sm].items){
-if(Math.random()<modes[data.sm].items[i].c){
+if(Math.random()<modes[data.sm].ci&&rand(0,data.q+(data.sc<=220?data.sc/20:11))==0){
+var r=rand(0,data.x*data.y-1);
+var ri=rand(0,modes[data.sm].getWholeItemC());
+var c=0;
+for(var i in modes[data.sm].items){
+c+=modes[data.sm].items[i].c;
+if(ri<c){
 if(modes[data.sm].items[i].onchoose(r))
 data.c[r].iid=i;
+break;
 }
 }
 }
@@ -279,9 +282,14 @@ this.ci=0;
 this.items=[];
 this.su=-1;
 this.share="I reached a score of \%p at '\%n'!";
+this.wholeItemC=0;
 
 Mode.prototype.additem=function(item){
 this.items[this.items.length]=item;
+this.wholeItemC+=item.c;
+};
+Mode.prototype.getWholeItemC=function(){
+return this.wholeItemC;
 };
 Mode.prototype.setmaxp=function(v){this.maxp=v;};
 Mode.prototype.onreachmax=function(i){
