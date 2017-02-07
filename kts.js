@@ -107,10 +107,8 @@ setInterval(function(){if(a.width!=innerWidth||a.height!=innerHeight)resize();},
 function tick(){
 data.ticking=true;
 var i=0;
-while(ticks[i]<(new Date()).getTime()-1000){i++}
-ticks.splice(0,i);
-ticks.push((new Date()).getTime());
-if(data.s==1){
+while(ticks[i]<(new Date()).getTime()-1000){i++}ticks.splice(0,i);
+ticks.push((new Date()).getTime());if(data.s==1){
 for(i in data.c){
 modes[data.sm].oncircletick(i);
 }}
@@ -255,7 +253,7 @@ if(data.s==0){
 switch(data.ms){
 case 1:
 var t=evt.changedTouches;
-for(i in t){
+for(var i in t){
 if(Math.sqrt(Math.pow(t[i].pageX-window.innerWidth/2,2)+Math.pow(t[i].pageY-window.innerHeight*0.80,2))<=window.innerHeight*0.12){
 data.ms=0;
 }
