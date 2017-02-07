@@ -3,13 +3,44 @@ kts.version="B 1.2 P 2";
 var d=window.document;d.write(". ");d.title="Keep Them Small "+String.fromCharCode(8211)+" "+kts.version;var b=d.body;b.innerHTML="";var a=b.appendChild(d.createElement("canvas"));a.style.position="fixed";a.style.left="0";a.style.top="0";d.addEventListener("resize",resize);
 var o=a.getContext("2d");
 var renderer={};
-renderer.fillCircle=function(x,y,r,color){
-o.fillStyle=color;
+renderer.circle=function(x,y,r,color,filled){
+o.strokeStyle=(o.fillStyle=color);
 o.beginPath();
 o.arc(x,y,r,0,Math.PI*2,true);
-o.closePath();o.fill();
+o.closePath();filled?o.fill():o.stroke();
 };
-var data={debug:false,maxtps:15,ticking:false,sm:0,x:3,y:4,s:0,ms:0,rs:-1,c:[],
+renderer.fillCircle=function(x,y,r,color){renderer.circle(x,y,r,color,true);};
+renderer.circleButton=function(text,x,y,r,color,isFilled){
+if(!color)color="white";
+renderer.circle(x,y,r,color,isFilled);
+o.strokeStyle=(o.fillStyle=isFilled?"black":color);o.font="bold "+r/3*2+"px Arial";o.textAlign="center";o.textBaseline="middle";
+o.save();
+o.translate(x,y);
+if(text.includes("$r"))o.rotate(Math.PI/2);
+if(text.includes("$d"))o.rotate(Math.PI);
+if(text.includes("$l"))o.rotate(Math.PI*1.5);
+text=text.split("$")[0];
+switch(text){
+case "€X":
+o.lineWidth=r*0.12;
+o.beginPath();
+o.moveTo(-r/2,-r/2);
+o.lineTo(r/2,r/2);
+o.moveTo(-r/2,r/2);
+o.lineTo(r/2,-r/2);
+o.closePath();
+o.stroke();
+break;
+case "€A":
+o.fillRect(-r*0.25,-r*0.25,r*0.5,r*0.85);
+o.beginPath();
+o.moveTo(-r*0.55,-r*0.15);o.lineTo(r*0.55,-r*0.15);o.lineTo(0,-r*0.6);
+o.closePath();o.fill();
+break;
+default:
+o.fillText(text,0,0);
+}o.restore();};
+var data={debug:true,maxtps:15,ticking:false,sm:0,x:3,y:4,s:0,ms:0,rs:-1,c:[],
 lose:function(i){data.s=1.5;data.f=0.05;if(i!==undefined)data.c[i].s=3;},
 init:function(){for(i=0;i<data.x*data.y;i++){data.c[i]={s:0,p:0,iid:-1};}data.q=15;data.su=0;data.v=1.1;data.score=0;data.f=0}};
 Object.defineProperty(data,"sc",{
@@ -106,16 +137,7 @@ o.font="bold "+h*0.04+"px Arial";
 o.fillText("Designed and coded by",w/2,h*0.23);
 o.fillText("with an",w/2,h*0.37);
 o.fillText("Feedback and bug report to",w/2,h*0.51);
-renderer.fillCircle(w/2,h*0.8,h*0.12,"white");
-o.strokeStyle="black";
-o.lineWidth=h*0.0142;
-o.beginPath();
-o.moveTo(w/2-h*0.06,h*0.74);
-o.lineTo(w/2+h*0.06,h*0.86);
-o.moveTo(w/2-h*0.06,h*0.86);
-o.lineTo(w/2+h*0.06,h*0.74);
-o.closePath();
-o.stroke();
+renderer.circleButton("€X",w/2,h*0.8,h*0.12,0,true);
 break;
 
 case 0:
@@ -123,11 +145,9 @@ default:
 o.fillStyle="black";o.fillRect(0,0,w,h);
 o.fillStyle="white";o.font="bold "+h*0.1+"px Arial";o.textAlign="center";o.textBaseline="middle";
 o.fillText(modes[data.sm].name,w/2,h*0.3);
-o.fillText(String.fromCharCode(11014),w/2,h*0.15);
-o.fillText(String.fromCharCode(11015),w/2,h*0.45);
-renderer.fillCircle(w/2,h*0.75,h*0.15,"white");
-o.fillStyle="black";
-o.fillText("Play",w/2,h*0.75);
+renderer.circleButton("€A",w/2,h*0.15,h*0.07,0,1);
+renderer.circleButton("€A$d",w/2,h*0.45,h*0.07,0,1);
+renderer.circleButton("Play",w/2,h*0.75,h*0.15,0,true);
 o.fillStyle="white";
 o.font="bold "+h*0.05+"px Arial";
 o.fillText("i",w-h*0.06,h*0.94);
