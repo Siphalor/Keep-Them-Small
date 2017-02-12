@@ -2,7 +2,7 @@
 ![Release](https://img.shields.io/github/release/siphalor/keep-them-small.svg)
 ![Issues](https://img.shields.io/github/issues/siphalor/keep-them-small.svg)
 
-**Keep Them Small** is a HTML5 game about preventing growing circles from getting to big. 
+**Keep Them Small** is a HTML5 mobile web game about preventing growing circles from getting to big. 
 
 *Currently it only works on mobile devices.*
 
