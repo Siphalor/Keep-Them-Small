@@ -1,5 +1,5 @@
 function kts(){
-kts.version="B 1.2 P 2";
+kts.version="B 1.2.1 P 1";
 var d=window.document;d.write(". ");d.title="Keep Them Small "+String.fromCharCode(8211)+" "+kts.version;var b=d.body;b.innerHTML="";var a=b.appendChild(d.createElement("canvas"));a.style.position="fixed";a.style.left="0";a.style.top="0";d.addEventListener("resize",resize);
 var o=a.getContext("2d");
 var renderer={};
@@ -10,15 +10,20 @@ o.arc(x,y,r,0,Math.PI*2,true);
 o.closePath();filled?o.fill():o.stroke();
 };
 renderer.fillCircle=function(x,y,r,color){renderer.circle(x,y,r,color,true);};
-renderer.circleButton=function(text,x,y,r,color,isFilled){
+renderer.circleButton=function(text,x,y,r,isFilled,color,color2){
 if(!color)color="white";
+o.lineWidth=r*0.15;
 renderer.circle(x,y,r,color,isFilled);
-o.strokeStyle=(o.fillStyle=isFilled?"black":color);o.font="bold "+r/3*2+"px Arial";o.textAlign="center";o.textBaseline="middle";
+o.strokeStyle=(o.fillStyle=isFilled?"black":(color2?color2:color));
+o.font="bold "+r/3*2+"px Arial";o.textAlign="center";o.textBaseline="middle";
 o.save();
 o.translate(x,y);
 if(text.includes("$r"))o.rotate(Math.PI/2);
 if(text.includes("$d"))o.rotate(Math.PI);
 if(text.includes("$l"))o.rotate(Math.PI*1.5);
+if(text.includes("$b"))o.font="bold "+r*1.25+"px Arial";
+if(text.includes("$b-"))o.font="bold "+r*1+"px Arial";
+if(text.includes("$b--"))o.font="bold "+r*0.8+"px Arial";
 text=text.split("$")[0];
 switch(text){
 case "€X":
@@ -107,8 +112,10 @@ setInterval(function(){if(a.width!=innerWidth||a.height!=innerHeight)resize();},
 function tick(){
 data.ticking=true;
 var i=0;
-while(ticks[i]<(new Date()).getTime()-1000){i++}ticks.splice(0,i);
-ticks.push((new Date()).getTime());if(data.s==1){
+while(ticks[i]<(new Date()).getTime()-1000){i++}
+ticks.splice(0,i);
+ticks.push((new Date()).getTime());
+if(data.s==1){
 for(i in data.c){
 modes[data.sm].oncircletick(i);
 }}
@@ -135,7 +142,7 @@ o.font="bold "+h*0.04+"px Arial";
 o.fillText("Designed and coded by",w/2,h*0.23);
 o.fillText("with an",w/2,h*0.37);
 o.fillText("Feedback and bug report to",w/2,h*0.51);
-renderer.circleButton("€X",w/2,h*0.8,h*0.12,0,true);
+renderer.circleButton("€X",w/2,h*0.8,h*0.12,1);
 break;
 
 case 0:
@@ -143,19 +150,14 @@ default:
 o.fillStyle="black";o.fillRect(0,0,w,h);
 o.fillStyle="white";o.font="bold "+h*0.1+"px Arial";o.textAlign="center";o.textBaseline="middle";
 o.fillText(modes[data.sm].name,w/2,h*0.3);
-renderer.circleButton("€A",w/2,h*0.15,h*0.07,0,1);
-renderer.circleButton("€A$d",w/2,h*0.45,h*0.07,0,1);
-renderer.circleButton("Play",w/2,h*0.75,h*0.15,0,true);
-o.fillStyle="white";
-o.font="bold "+h*0.05+"px Arial";
-o.fillText("i",w-h*0.06,h*0.94);
-o.strokeStyle="white";
-o.lineWidth=h*0.0071;
-o.beginPath();o.arc(w-h*0.06,h*0.94,h*0.04,0,2*Math.PI,true);o.closePath();o.stroke();
+renderer.circleButton("€A",w/2,h*0.15,h*0.07);
+renderer.circleButton("€A$d",w/2,h*0.45,h*0.07);
+renderer.circleButton("Play",w/2,h*0.75,h*0.15,1);
+renderer.circleButton("i$b",w-h*0.06,h*0.94,h*0.04);
 break;
 }
 }else{
-if(data.s==2){h-=h*0.2}o.fillStyle="rgb("+(data.su*28).toString()+",0,0)";
+o.fillStyle="rgb("+(data.su*28).toString()+",0,0)";
 o.fillRect(0,0,w,innerHeight);
 if(data.s!=2){
 o.textAlign="center";o.textBaseline="middle";o.font="bold "+h*0.27+"px Arial";
@@ -171,23 +173,11 @@ modes[data.sm].items[c.iid].render(c);}
 }
 }
 if(data.s==2){
-o.strokeStyle="#333";
-o.lineWidth=15;
-o.font="bold "+h*0.27+"px Arial";o.textAlign="center";o.textBaseline="middle";
-o.fillStyle="rgba(255,255,255,0.4)";
-o.fillText(data.sc.toString(),w/2,h/2);
-o.strokeText(data.sc.toString(),w/2,h/2);
-o.fillStyle="#555";
-o.fillRect(0,innerHeight*0.8,w,innerHeight*0.9);
-o.fillStyle="#4c4";
-o.fillRect(0,innerHeight*0.9,w,innerHeight);
-o.strokeStyle="white";
-o.lineWidth=h*0.0021;
-o.beginPath();o.moveTo(0,innerHeight*0.8);o.lineTo(w,innerHeight*0.8);o.moveTo(0,innerHeight*0.9);o.lineTo(w,innerHeight*0.9);o.stroke();
-o.fillStyle="white";
-o.font="bold "+innerHeight*0.07+"px Arial";
-o.fillText(String.fromCharCode(8594),w/2,innerHeight*0.84);
-o.fillText("WhatsApp",w/2,innerHeight*0.95);
+let h=innerHeight;
+renderer.circleButton(data.sc.toString()+"$b-",w/2,h*0.85,h*0.12,1);
+let d=(w/2-h*0.12)/2;
+renderer.circleButton("WA$b--",d,h*0.85,d*0.6,0,"#6c6","white");
+renderer.circleButton("€A$r",w-d,h*0.85,d*0.6);
 }
 o.fillStyle="rgba(255,90,90,"+(data.f).toString()+")";
 o.fillRect(0,0,innerWidth,innerHeight);
@@ -208,7 +198,7 @@ function resize(){
 var w=window.innerWidth;var h=window.innerHeight;
 a.width=w;a.height=h;
 /*if(w>h){data.x=data.y;data.y=data.c.length/data.x}*/
-if(data.s==2){h-=h*0.2;}
+if(data.s==2){h-=h*0.3;}
 if(data.s==0){
 
 }else{
@@ -249,61 +239,58 @@ break;
 }
 }
 function touch(evt){
-if(data.s==0){
+let h=innerHeight;let w=innerWidth;
+var t=evt.changedTouches;
+switch(data.s){
+case 0:
 switch(data.ms){
 case 1:
-var t=evt.changedTouches;
-for(var i in t){
-if(Math.sqrt(Math.pow(t[i].pageX-window.innerWidth/2,2)+Math.pow(t[i].pageY-window.innerHeight*0.80,2))<=window.innerHeight*0.12){
+for(let i in t){
+if(pInC(w/2,h*0.8,h*0.12,t[i].pageX,t[i].pageY)){
 data.ms=0;
 }
-if(t[i].pageY>=window.innerHeight*0.53&&t[i].pageY<=window.innerHeight*0.61){
-window.location.href="http://www.github.com/Siphalor/Keep-Them-Small";
-}
+if(t[i].pageY>=h*0.53&&t[i].pageY<=h*0.61) location.href="http://www.github.com/Siphalor/Keep-Them-Small";
 }
 break;
 case 0:
 default:
-var t=evt.changedTouches;
-for(i in t){
-var y=t[i].pageY/window.innerHeight;
-if(y>=0.1&&y<=0.3){
-data.sm=(data.sm==0?modes.length-1:data.sm-1);
-}
-if(y>=0.3&&y<=0.5){
-data.sm=(data.sm==modes.length-1?0:data.sm+1);
-}
-if(Math.sqrt(Math.pow(t[i].pageX-window.innerWidth/2,2)+Math.pow(t[i].pageY-window.innerHeight*0.75,2))<=window.innerHeight*0.15){
+for(let i in t){
+let x=t[i].pageX;let y=t[i].pageY;
+if(pInC(w/2,h*0.15,h*0.07,x,y)) data.sm-=(data.sm?1:-modes.length-1);
+if(pInC(w/2,h*0.45,h*0.07,x,y)) data.sm+=(data.sm!=modes.length-1?1:-modes.length+1);
+if(pInC(w/2,h*0.75,h*0.15,x,y)){
 data.s=1;data.init();
 }
-if(t[i].pageX>=window.innerWidth*0.82&&t[i].pageY>=window.innerHeight*0.84){
-data.ms=1;
-}
+if(pInC(w-h*0.06,h*0.94,h*0.04,x,y)) data.ms=1;
 }
 break;
 }
-}else{
-var t=evt.changedTouches;
+break;
+case 1:
 var b=true;
-for(i in t){
+for(let i in t){
 for(x=0;x<data.x;x++){
 for(y=0;y<data.y;y++){
-if(data.s==1&&Math.sqrt(Math.pow(t[i].pageX-data.c[x+y*data.x].x,2)+Math.pow(t[i].pageY-data.c[x+y*data.x].y,2))<=p2r(data.c[x+y*data.x].p)){
+let j=x+y*data.x;
+if(pInC(data.c[j].x,data.c[j].y,p2r(data.c[j].p),t[i].pageX,t[i].pageY)){
 b=false;
-modes[data.sm].ontouchcircle(x+y*data.x);
-}
-}
-if(data.s==2){
-if(t[i].pageY>=window.innerHeight*0.9){window.location.href="whatsapp://send?text=" +encodeURIComponent(modes[data.sm].share.replace("\%n","Keep Them Small").replace("\%p",data.sc.toString()));b=false;
-}else if(t[i].pageY>=window.innerHeight*0.8){
-data.s=0;
+modes[data.sm].ontouchcircle(j);
 }
 }
 }
-if(b){
-chooseTick();
+if(b) chooseTick();
 }
+break;
+case 2:
+for(let i in t){
+let x=t[i].pageX;let y=t[i].pageY;
+let d=(w/2-h*0.12)/2;
+if(pInC(d,h*0.85,d*0.6,x,y)){window.location.href="whatsapp://send?text=" +encodeURIComponent(modes[data.sm].share.replace("\%n","Keep Them Small").replace("\%p",data.sc.toString()));b=false;
 }
+if(pInC(w-d,h*0.85,d*0.6,x,y)) data.s=0;
+}
+break;
+default: break;
 }
 }
 function encode(s){
@@ -319,6 +306,9 @@ return Math.floor(Math.random()*(max-min+1))+min;
 }
 function p2r(p){
 return data.r*0.2+data.r*0.8*p/30;
+}
+function pInC(cx,cy,r,x,y){
+return Math.sqrt((cx-x)*(cx-x)+(cy-y)*(cy-y))<=r;
 }
 function Item(){
 if(this.color==undefined)this.color="#d00";
