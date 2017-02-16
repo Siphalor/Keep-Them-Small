@@ -256,7 +256,7 @@ case 0:
 default:
 for(let i in t){
 let x=t[i].pageX;let y=t[i].pageY;
-if(pInC(w/2,h*0.15,h*0.07,x,y)) data.sm-=(data.sm?1:-modes.length-1);
+if(pInC(w/2,h*0.15,h*0.07,x,y)) data.sm-=(data.sm?1:-modes.length+1);
 if(pInC(w/2,h*0.45,h*0.07,x,y)) data.sm+=(data.sm!=modes.length-1?1:-modes.length+1);
 if(pInC(w/2,h*0.75,h*0.15,x,y)){
 data.s=1;data.init();
