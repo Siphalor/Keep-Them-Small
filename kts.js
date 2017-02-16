@@ -1,5 +1,5 @@
 function kts(){
-kts.version="B 1.2.1 P 1";
+kts.version="B 1.2.1";
 var d=window.document;d.write(". ");d.title="Keep Them Small "+String.fromCharCode(8211)+" "+kts.version;var b=d.body;b.innerHTML="";var a=b.appendChild(d.createElement("canvas"));a.style.position="fixed";a.style.left="0";a.style.top="0";d.addEventListener("resize",resize);
 var o=a.getContext("2d");
 var renderer={};
