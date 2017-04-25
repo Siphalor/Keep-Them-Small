@@ -232,7 +232,7 @@ data.c[i].y=data.m+y*data.m+y*data.r*2+data.r+ry/2;
 }
 function chooseTick(){
 if(data.s==1){
-var r=rand(0,data.x*data.y-1);
+var r=rand(0,data.c.length-1);
 if(data.c[r].s==0&&rand(0,data.q)==0){data.c[r].s=1;
 if(data.c[r].iid!=-1)modes[data.sm].items[data.c[r].iid].onopen(r);}
 if(Math.random()<modes[data.sm].ci&&rand(0,data.q+(data.sc<=220?data.sc/20:11))==0){
@@ -338,7 +338,7 @@ renderer.fillCircle(c.x,c.y,p2r(c.p),this.getColor(c));
 o.lineWidth=ch*0.0071;if(c.s==3)renderer.circle(c.x,c.y,p2r(c.p),"#f61");
 };
 if(this.ontapclose==undefined)this.ontapclose=function(i){
-c.iid=-1;
+data.c[i].iid=-1;
 };
 if(this.onreachmax==undefined)this.onreachmax=function(i){
 return true;
