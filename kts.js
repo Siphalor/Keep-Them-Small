@@ -69,7 +69,7 @@ o.fillText(text,0,0);
 }o.restore();};
 var data={debug:true,bg:"black",maxtps:30,ticking:false,sm:0,x:3,y:4,s:0,ms:0,rs:-1,c:[],
 lose:function(i){data.s=1.5;data.f=0.05;if(i!==undefined)data.c[i].s=3;},
-init:function(){let l=desktop?10:data.x*data.y;data.y=desktop?3:data.y;data.x=desktop?4:data.x;for(let i=0;i<l;i++){data.c[i]={s:0,p:0,iid:desktop?0:-1};if(desktop)modes[data.sm].items[0].onchoose(i);switch(i){case 0:data.c[i].val='E';break;case 1:data.c[i].val='R';break;case 2:data.c[i].val='T';break;case 3:data.c[i].val='S';break;case 4:data.c[i].val='D';break;case 5:data.c[i].val='F';break;case 6:data.c[i].val='G';break;case 7:data.c[i].val='X';break;case 8:data.c[i].val='C';break;case 9:data.c[i].val='V';break;}}data.q=15;data.su=0;data.v=1.1;data.score=0;data.f=0}};
+init:function(){let l=desktop?10:data.x*data.y;data.y=desktop?3:data.y;data.x=desktop?4:data.x;data.c=new Array(l);for(let i=0;i<l;i++){data.c[i]={s:0,p:0,iid:desktop?0:-1};if(desktop)modes[data.sm].items[0].onchoose(i);switch(i){case 0:data.c[i].val='E';break;case 1:data.c[i].val='R';break;case 2:data.c[i].val='T';break;case 3:data.c[i].val='S';break;case 4:data.c[i].val='D';break;case 5:data.c[i].val='F';break;case 6:data.c[i].val='G';break;case 7:data.c[i].val='X';break;case 8:data.c[i].val='C';break;case 9:data.c[i].val='V';break;}}data.q=15;data.su=0;data.v=1.1;data.score=0;data.f=0}};
 Object.defineProperty(window,"cw",{get:function(){return a.width;},set:function(v){a.width=v;}});
 Object.defineProperty(window,"ch",{get:function(){return a.height;},set:function(v){a.height=v;}});
 Object.defineProperty(data,"sc",{
@@ -78,7 +78,7 @@ set: function(n){data.score=n;if(n<=-100){alert('You\'re so bad. I have to stop 
 if(modes[data.sm].su!=-1&&data.sc>=modes[data.sm].su*(data.su+1)){data.su=Math.floor(data.sc/modes[data.sm].su);data.v+=0.1*data.su;data.bg="rgb("+(data.su*28).toString()+",0,0)";}}});
 
 var rb=Item.apply({c:333,color:"#8f3",onreachmax:function(i){data.c[i].s=2;return false;},onreachmin:function(i){data.c[i].iid=-1;},ontapclose:function(i){data.lose(i);return 0;},ontapreopen:function(i){data.lose(i)}});
-var ci=Item.apply({color:"ff3",c:75,ontapclose:function(i){let c=0;for(j=0;j<data.x*data.y;j++){if(data.c[j].p!=0){data.c[j].s=2;data.c[j].iid=-1;c++;}}data.sc+=Math.floor(c/3);},ontapopen:function(i){data.c[i].s=0}});
+var ci=Item.apply({color:"#ff3",c:75,ontapclose:function(i){let c=0;for(j=0;j<data.c.length;j++){if(data.c[j].p!=0){data.c[j].s=2;data.c[j].iid=-1;c++;}}data.sc+=Math.floor(c/3);},ontapopen:function(i){data.c[i].s=0}});
 var fi=Item.apply({c:35,ontapclose:function(i){var id=data.c[i].iid;data.c[i].iid=-1;let c=0;for(let j=0,c=data.c.length;j<c;j++){data.c[j].s=0;if((data.c[j].iid==-1||data.c[j].iid==id)&&data.c[j].p!=0){data.c[j].iid=id;c++}}data.sc+=Math.floor(c*0.6);},ontapreopen:function(i){data.c[i].iid=-1;},ontapopen:function(i){if(data.c[i].p!=0){data.c[i].iid=-1;}else{data.c[i].s=0;}},onopen:function(i){if(data.c[i].p!=0){if(rand(0,data.q*8)==0){data.c[i].s=2;}else{data.c[i].s=0;}};},onchoose:function(i){if(data.c[i].s==0&&data.c[i].p==0){return true}return false},onreachmin:function(i){data.c[i].iid=-1;},
 getColor:function(c){
 return(c.s==1||(c.s==0&&c.p==0)?"#5ff":"#9ff");
@@ -255,7 +255,7 @@ var r=rand(0,data.c.length-1);
 if(data.c[r].s==0&&rand(0,data.q)==0){data.c[r].s=1;
 if(data.c[r].iid!=-1)modes[data.sm].items[data.c[r].iid].onopen(r);}
 if(Math.random()<modes[data.sm].ci&&rand(0,data.q+(data.sc<=220?data.sc/20:11))==0){
-var r=rand(0,data.x*data.y-1);
+var r=rand(0,data.c.length-1);
 var ri=rand(0,modes[data.sm].getWholeItemC());
 var c=0;
 for(let i=0,l=modes[data.sm].items.length;i<l;i++){
@@ -362,6 +362,16 @@ break;
 case 86:
 modes[data.sm].ontouchcircle(9);
 break;
+case  38:
+if(data.s==0&&data.ms==0)data.sm-=(data.sm?1:-modes.length+1);
+break;
+case  40:
+if(data.s==0&&data.ms==0)data.sm+=(data.sm!=modes.length-1?1:-modes.length+1);
+break;
+case 13:
+data.init();
+data.s=1;
+break;
 default:
 chooseTick();
 }
@@ -453,6 +463,7 @@ data.sc--;
 }
 };
 Mode.prototype.ontouchcircle=function(i){
+if(data.s!=1)return;
 var c=data.c[i];
 switch(c.s){
 case 0:c.s=1;if(c.iid!=-1)this.items[c.iid].ontapopen(i);break;
