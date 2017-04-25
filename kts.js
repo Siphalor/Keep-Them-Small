@@ -169,13 +169,11 @@ renderer.font(ch*0.27);
 o.fillStyle="#444";
 o.fillText(data.sc.toString(),cw/2,ch/2);
 }
-for(x=0;x<data.x;x++){
-for(y=0;y<data.y;y++){
-var c=data.c[x+y*data.x];
+for(i=0;i<data.c.length;i++){
+var c=data.c[i];
 renderer.fillCircle(c.x,c.y,p2r(c.p),(c.s==3?"#f61":"white"));
 if(c.iid!=-1){
 modes[data.sm].items[c.iid].render(c);}
-}
 }
 if(data.s==2){
 renderer.circleButton(data.sc.toString()+"$b-",cw/2,ch*0.85,ch*0.12,1);
