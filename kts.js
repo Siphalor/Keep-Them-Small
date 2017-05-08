@@ -10,7 +10,7 @@ var o=a.getContext("2d");
 var renderer={};
 renderer.font=function(size){
 o.font="bold "+size+"px Arial, sans-serif";
-}
+};
 renderer.circle=function(x,y,r,color,filled){
 o.strokeStyle=(o.fillStyle=color);
 o.beginPath();
